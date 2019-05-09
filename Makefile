@@ -30,24 +30,8 @@ lib/libspatialite.a: build_arches
 		; \
 		done;
 
-	# Make fat libraries for watchOS
-	for file in build/watchOS/armv7k/lib/*.a; \
-		do name=`basename $$file .a`; \
-		lipo -create \
-			-arch armv7k build/watchOS/armv7k/lib/$$name.a \
-			-arch arm64_32 build/watchOS/arm64_32/lib/$$name.a \
-			-arch i386 build/watchSimulator/i386/lib/$$name.a \
-			-arch x86_64 build/watchSimulator/x86_64/lib/$$name.a \
-			-output lib/$${name}_watchos.a \
-		; \
-		done;
-
 # Build separate architectures
 build_arches:
-	${MAKE} arch ARCH=armv7k PLATFORM=watchOS HOST=arm-apple-darwin MIN_VERSION=watchos-version-min=3.0
-	${MAKE} arch ARCH=arm64_32 PLATFORM=watchOS HOST=arm-apple-darwin MIN_VERSION=watchos-version-min=3.0
-	${MAKE} arch ARCH=i386 PLATFORM=watchSimulator HOST=i386-apple-darwin MIN_VERSION=watchos-version-min=3.0
-	${MAKE} arch ARCH=x86_64 PLATFORM=watchSimulator HOST=x86_64-apple-darwin MIN_VERSION=watchos-version-min=3.0
 	${MAKE} arch ARCH=armv7 PLATFORM=iPhoneOS HOST=arm-apple-darwin MIN_VERSION=iphoneos-version-min=7.0
 	${MAKE} arch ARCH=armv7s PLATFORM=iPhoneOS HOST=arm-apple-darwin MIN_VERSION=iphoneos-version-min=7.0
 	${MAKE} arch ARCH=arm64 PLATFORM=iPhoneOS HOST=arm-apple-darwin MIN_VERSION=iphoneos-version-min=7.0
